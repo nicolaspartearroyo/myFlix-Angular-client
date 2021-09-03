@@ -1,13 +1,10 @@
-<div class="syn-container">
-  <mat-toolbar>
-    <mat-toolbar-row class="syn-header">
-      <button mat-icon-button aria-label="Close the director details button" mat-dialog-close color="primary"
-        class="cls-bttn">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <mat-dialog-content class="syn-content">{{
-    data.synopsis
-    }}</mat-dialog-content>
+<div class="synopsis-container">
+  <mat-card-header>
+    <h2 class="title">{{ movie.Title }}</h2>
+  </mat-card-header>
+  <mat-dialog-content class="synopsis-content">{{ movie.description }}</mat-dialog-content>
+</div>
+<div class="close-btn"><button mat-icon-button aria-label="Close button" mat-dialog-close color="primary">
+    Close
+  </button>
 </div>

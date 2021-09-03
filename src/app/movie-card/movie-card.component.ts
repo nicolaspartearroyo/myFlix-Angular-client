@@ -31,12 +31,13 @@ export class MovieCardComponent {
       return this.movies;
     });
   }
-
-  synopsisDetails(synopsis: string): void {
+  openMovieSynopsis(Title: string, description: string): void {
     this.dialog.open(MovieSynopsisComponent, {
-      data: { synopsis },
+      data: { Title, description },
+      width: '650px'
     });
   }
+
 
 
   //   genreDetails(name: string, description: string): void {
