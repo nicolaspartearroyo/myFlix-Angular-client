@@ -23,11 +23,24 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MovieSynopsisComponent } from './movie-synopsis/movie-synopsis.component';
 import { MovieGenreComponent } from './movie-genre/movie-genre.component';
+import { MovieDirectorComponent } from './movie-director/movie-director.component';
+import { FavoritesComponent } from './favorites/favorites.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ProfileComponent } from './profile/profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent },
   { path: 'movies', component: MovieCardComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'favorites', component: FavoritesComponent }
 ];
 
 @NgModule({
@@ -38,22 +51,32 @@ const appRoutes: Routes = [
     MovieCardComponent,
     WelcomePageComponent,
     MovieSynopsisComponent,
-    MovieGenreComponent
+    MovieGenreComponent,
+    MovieDirectorComponent,
+    FavoritesComponent,
+    NavBarComponent,
+    ProfileComponent,
+    EditProfileComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes),
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatDialogModule,
     MatSnackBarModule,
     FormsModule,
-    MatIconModule
+    RouterModule.forRoot(appRoutes),
+    MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

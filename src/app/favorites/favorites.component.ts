@@ -1,22 +1,24 @@
-// src/app/movie-card/movie-card.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
-import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.component';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { MovieGenreComponent } from '../movie-genre/movie-genre.component';
 import { MovieDirectorComponent } from '../movie-director/movie-director.component';
-
+import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.component';
 
 @Component({
-  selector: 'app-movie-card',
-  templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+  selector: 'app-favorites',
+  templateUrl: './favorites.component.html',
+  styleUrls: ['./favorites.component.scss']
 })
-export class MovieCardComponent {
+export class FavoritesComponent implements OnInit {
+  isLoading = false;
+  user: any = {};
+  favorites: any = [];
   movies: any[] = [];
   faves: any[] = [];
-  isLoading = false;
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -27,22 +29,43 @@ export class MovieCardComponent {
   ngOnInit(): void {
     this.getMovies();
     this.getUsersFavs();
+  }
 
+  getUsersFavs(): void {
+    const user = localStorage.getItem('username');
+    this.fetchApiData.getUser(user).subscribe((resp: any) => {
+      this.faves = resp.Favorites;
+      console.log(this.faves);
+      return this.faves;
+    });
+  }
+
+  getUser(): void {
+    let user = localStorage.getItem('username');
+    this.fetchApiData.getUser(user).subscribe((res: any) => {
+      this.user = res;
+      this.getMovies();
+    });
   }
 
   getMovies(): void {
+    this.isLoading = true;
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.isLoading = false;
-
       this.movies = resp;
-      return this.movies;
+      return this.filterFavorites(); // Calls the filter function when calling movies to show only favorites
     });
   }
-  openMovieSynopsis(Title: string, description: string): void {
-    this.dialog.open(MovieSynopsisComponent, {
-      data: { Title, description },
-      width: '650px'
+  /**
+   * Filters movies to display only the users favorites
+  */
+  filterFavorites(): void {
+    this.movies.forEach((movie: any) => {
+      if (this.faves.includes(movie._id)) {
+        this.favorites.push(movie);
+      } console.log(this.favorites);
     });
+    return this.favorites; // Calls a reload for a dynamic removal from list
   }
 
   openGenre(name: string, description: string): void {
@@ -51,12 +74,21 @@ export class MovieCardComponent {
       width: '650px'
     });
   }
+
   openDirectorDialog(name: string, bio: string, birthyear: string): void {
     this.dialog.open(MovieDirectorComponent, {
       data: { name, bio, birthyear },
       width: '650px'
     });
   }
+
+  openMovieSynopsis(Title: string, description: string): void {
+    this.dialog.open(MovieSynopsisComponent, {
+      data: { Title, description },
+      width: '650px'
+    });
+  }
+
   addToFavoriteMoviesList(id: string, Title: string): void {
     this.fetchApiData.addToFavoriteMoviesList(id).subscribe((res: any) => {
       this.snackBar.open(`${Title} has been added to favorties`, 'OK', {
@@ -66,26 +98,19 @@ export class MovieCardComponent {
     })
   }
 
-  /**
-   * Removed movie from users favorites list
-  */
   removeFromFavorites(id: string, Title: string): void {
     this.fetchApiData.removeFavoriteMovie(id).subscribe((res: any) => {
       this.snackBar.open(`${Title} has been removed from favorties`, 'OK', {
         duration: 3000,
       })
+      setTimeout(function () {
+        window.location.reload();
+      }, 3500);
       return this.getUsersFavs();
     })
   }
-  getUsersFavs(): void {
-    const user = localStorage.getItem('username');
-    this.fetchApiData.getUser(user).subscribe((resp: any) => {
-      this.faves = resp.Favorites;
-      return this.faves;
-    });
-  }
   /**
-   * Compares movie id's with getUsersFavs returned list to set the Favorites icon to add/remove correctly
+   * Allows for dynamic loading of favorites icon to display on/off of favorites
   */
   setFaveStatus(id: any): any {
     if (this.faves.includes(id)) {

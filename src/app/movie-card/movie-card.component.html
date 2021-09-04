@@ -1,3 +1,4 @@
+<app-nav-bar></app-nav-bar>
 <div style="display: flex;">
   <mat-card *ngFor="let movie of movies;" style="flex: 1 1 auto;">
     <mat-card-header>
@@ -9,14 +10,17 @@
       <button mat-stroked-button (click)="openGenre(movie.Genre.Name, movie.Genre.Description)" color="primary">
         Genre
       </button>
-      <button mat-button color="primary">
+      <button mat-stroked-button
+        (click)="openDirectorDialog(movie.Director.Name, movie.Director.Bio, movie.Director.Birthdate)" color="primary">
         Director
       </button>
 
       <button mat-stroked-button (click)="openMovieSynopsis(movie.Title, movie.Description)" color="primary">
         Synopsis
       </button>
-      <mat-icon>favorite_border</mat-icon>
+      <div>
+
+      </div>
     </mat-card-actions>
   </mat-card>
 </div>

@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Update Account Details</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="!isLoading">
+    <form>
+      <mat-form-field>
+        <input matInput [(ngModel)]="userDetails.Password" type="password" placeholder="Password" name="Password"
+          required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="userDetails.Email" type="email" placeholder="Email" name="Email" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="userDetails.Birthdate" type="date" placeholder="Birthdate" name="Birthdate">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="updateUser()">
+      Submit
+    </button>
+  </mat-card-actions>
+</mat-card>
