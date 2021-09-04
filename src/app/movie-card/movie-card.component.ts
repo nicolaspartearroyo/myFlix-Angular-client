@@ -5,7 +5,6 @@ import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.compone
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MovieGenreComponent } from '../movie-genre/movie-genre.component';
-import { MovieDirectorComponent } from '../movie-director/movie-director.component';
 
 
 @Component({
@@ -15,8 +14,6 @@ import { MovieDirectorComponent } from '../movie-director/movie-director.compone
 })
 export class MovieCardComponent {
   movies: any[] = [];
-  faves: any[] = [];
-  isLoading = false;
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -26,15 +23,12 @@ export class MovieCardComponent {
 
   ngOnInit(): void {
     this.getMovies();
-    this.getUsersFavs();
-
   }
 
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-      this.isLoading = false;
-
       this.movies = resp;
+      console.log(this.movies);
       return this.movies;
     });
   }
@@ -51,48 +45,10 @@ export class MovieCardComponent {
       width: '650px'
     });
   }
-  openDirectorDialog(name: string, bio: string, birthyear: string): void {
-    this.dialog.open(MovieDirectorComponent, {
-      data: { name, bio, birthyear },
-      width: '650px'
-    });
-  }
-  addToFavoriteMoviesList(id: string, Title: string): void {
-    this.fetchApiData.addToFavoriteMoviesList(id).subscribe((res: any) => {
-      this.snackBar.open(`${Title} has been added to favorties`, 'OK', {
-        duration: 3000,
-      })
-      return this.getUsersFavs();
-    })
-  }
 
-  /**
-   * Removed movie from users favorites list
-  */
-  removeFromFavorites(id: string, Title: string): void {
-    this.fetchApiData.removeFavoriteMovie(id).subscribe((res: any) => {
-      this.snackBar.open(`${Title} has been removed from favorties`, 'OK', {
-        duration: 3000,
-      })
-      return this.getUsersFavs();
-    })
-  }
-  getUsersFavs(): void {
-    const user = localStorage.getItem('username');
-    this.fetchApiData.getUser(user).subscribe((resp: any) => {
-      this.faves = resp.Favorites;
-      return this.faves;
-    });
-  }
-  /**
-   * Compares movie id's with getUsersFavs returned list to set the Favorites icon to add/remove correctly
-  */
-  setFaveStatus(id: any): any {
-    if (this.faves.includes(id)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
+  //   directorDetails(name: string, bio: string): void {
+  //     this.dialog.open(MovieDirectorComponent, {
+  //       data: { name, bio },
+  //     });
+  //   }
 }
