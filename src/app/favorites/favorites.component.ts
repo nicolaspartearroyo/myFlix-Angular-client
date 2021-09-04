@@ -53,9 +53,11 @@ export class FavoritesComponent implements OnInit {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.isLoading = false;
       this.movies = resp;
+      console.log(this.movies);
       return this.filterFavorites(); // Calls the filter function when calling movies to show only favorites
     });
   }
+
   /**
    * Filters movies to display only the users favorites
   */
@@ -82,15 +84,16 @@ export class FavoritesComponent implements OnInit {
     });
   }
 
-  openMovieSynopsis(Title: string, description: string): void {
+  openMovieSynopsis(Title: string, description: string, trailerUrl: string): void {
     this.dialog.open(MovieSynopsisComponent, {
-      data: { Title, description },
+      data: { Title, description, trailerUrl },
       width: '650px'
     });
   }
 
   addToFavoriteMoviesList(id: string, Title: string): void {
     this.fetchApiData.addToFavoriteMoviesList(id).subscribe((res: any) => {
+      //let favMovies = res.Favorites;
       this.snackBar.open(`${Title} has been added to favorties`, 'OK', {
         duration: 3000,
       })
@@ -100,6 +103,7 @@ export class FavoritesComponent implements OnInit {
 
   removeFromFavorites(id: string, Title: string): void {
     this.fetchApiData.removeFavoriteMovie(id).subscribe((res: any) => {
+      //let favMovies = res.Favorites;
       this.snackBar.open(`${Title} has been removed from favorties`, 'OK', {
         duration: 3000,
       })
@@ -109,6 +113,7 @@ export class FavoritesComponent implements OnInit {
       return this.getUsersFavs();
     })
   }
+
   /**
    * Allows for dynamic loading of favorites icon to display on/off of favorites
   */
