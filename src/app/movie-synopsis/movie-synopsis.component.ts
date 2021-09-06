@@ -9,9 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class MovieSynopsisComponent implements OnInit {
   constructor(
 
-    /**
-     * Uses inject to get the movie details
-    */
+    // User injected to get the movie Title and desciption
     @Inject(MAT_DIALOG_DATA)
     public movie: {
       Title: string;
