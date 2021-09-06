@@ -1,38 +1,24 @@
 <app-nav-bar></app-nav-bar>
-
-<!-- Favorites list shows the same fully functional list as the movies list, but only displays the users favorites -->
-
-<div class="favorites-container">
-  <h1>Your Favorites</h1>
-</div>
-<mat-divider></mat-divider>
-<mat-spinner *ngIf="isLoading" class="movie-spinner" color="primary" diameter="80"></mat-spinner>
-<div class="movie-container">
-  <mat-card *ngFor="let movies of favorites;" style="flex: 1 1 auto;">
-    <mat-card-header>
-      <mat-card-title>{{ movies.Title }}</mat-card-title>
-      <div>
-        <mat-icon *ngIf="!setFaveStatus(movies._id)" (click)="addToFavoriteMoviesList(movies._id, movies.Title)"
-          class="favorite-button">favorite_border</mat-icon>
-        <mat-icon *ngIf="setFaveStatus(movies._id)" (click)="removeFromFavorites(movies._id, movies.Title)"
-          class="favorite-button-active">favorite</mat-icon>
-      </div>
-      <mat-card-subtitle>Directed by: {{movies.director.name}}</mat-card-subtitle>
-    </mat-card-header>
-    <img class="movie-poster" src={{movies.imageUrl}} alt={{movies.Title}} />
-    <mat-card-actions>
-      <button mat-stroked-button (click)="openGenre(movies.genre.name, movies.genre.description)" color="primary">
-        Genre
-      </button>
-      <button mat-stroked-button
-        (click)="openDirectorDialog(movies.director.name, movies.director.bio, movies.director.birthyear)"
-        color="primary">
-        Director
-      </button>
-      <button mat-stroked-button (click)="openMovieSynopsis(movies.Title, movies.description, movies.trailerUrl)"
-        color="primary">
-        Synopsis
-      </button>
-    </mat-card-actions>
-  </mat-card>
+<div class="wrapper" style="background-color: black;">
+  <h1 style="margin: 5px; padding-top: 10px; padding-left: 10px; color:white">Favorite movies</h1>
+  <div class="movie-container">
+    <mat-card style="background-color: black;" class="custom-card" *ngFor="let movie of movies">
+      <mat-card-header class="custom-card-header">
+        <mat-card-title class="custom-card-title">{{
+          movie.title
+          }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content [style.margin]="'0'" class="custom-card-content">
+        <img mat-card-image src="{{ movie.ImageURL }}" style="max-width:400px" />
+      </mat-card-content>
+      <mat-card-actions class="custom-card-actions">
+        <div>
+          <button mat-icon-button (click)="toggleFavoriteMovie(movie._id, movie.Title)" style="margin: 0.5rem 1rem"
+            color="primary" matTooltip="Add to Favorites list" aria-label="Remove from Favorites list">
+            <span>Remove from Favorites</span>
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

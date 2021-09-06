@@ -20,6 +20,9 @@ import { Router } from '@angular/router';
 export class UserLoginFormComponent implements OnInit {
   isLoading = false;
 
+  /**
+  * Required for login
+ */
   @Input() userData = { Username: '', Password: '' };
 
   constructor(
@@ -32,23 +35,22 @@ export class UserLoginFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  // This is the function responsible for sending the form inputs to the backend
+  /**
+    * Form details to login
+   */
   userLogin(): void {
     this.router.navigate(['movies']);
     this.isLoading = true;
     this.fetchApiData.userLogin(this.userData).subscribe((result) => {
       this.isLoading = false;
-      // Logic for successful user login
       this.dialogRef.close();
-      console.log(this.userData)
 
-      // Set username and password for locall storage
+      // Set username and password for local storage
       localStorage.setItem('username', this.userData.Username);
       localStorage.setItem('token', result.token);
 
-      // Will most likely reditrect but for now can leave a note
-      this.snackBar.open(this.userData.Username, 'Welcome back!', {
+      //Welcome message.
+      this.snackBar.open(this.userData.Username, 'Welcome!', {
         duration: 3000
       });
       this.router.navigate(['movies']);

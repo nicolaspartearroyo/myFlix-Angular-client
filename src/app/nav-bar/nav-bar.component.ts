@@ -21,12 +21,13 @@ export class NavBarComponent implements OnInit {
   }
 
   /**
-   * Gets user details, used to display username in the nav bar
-  */
+    * Gets user details, used to display username in the nav bar
+   */
   public getUserDetails(): void {
     this.userDetails = localStorage.getItem('username');
   }
 
+  // Log out user
   signOut(): void {
     localStorage.clear();
     this.router.navigate(['welcome']);
