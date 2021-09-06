@@ -11,6 +11,7 @@ const apiUrl = 'https://myflixbypartearroyo.herokuapp.com/';
 @Injectable({
   providedIn: 'root'
 })
+
 export class FetchApiDataService {
   constructor(private http: HttpClient, private router: Router) { }
 

@@ -1,19 +1,17 @@
-// src/app/movie-card/movie-card.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-// imports 
-import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.component';
 import { MovieGenreComponent } from '../movie-genre/movie-genre.component';
 import { MovieDirectorComponent } from '../movie-director/movie-director.component';
-
+import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.component';
 
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.scss']
+  styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent {
   // Store the movies returned by the API call.
@@ -37,10 +35,11 @@ export class MovieCardComponent {
 
   //Get all movies from the API 
   getMovies(): void {
+    this.isLoading = true;
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.isLoading = false;
-
       this.movies = resp;
+      //console.log(this.movies);
       return this.movies;
     });
   }
@@ -61,10 +60,10 @@ export class MovieCardComponent {
     });
   }
 
-  //Open modal with Director data
-  openDirectorDialog(name: string, bio: string, birthyear: string): void {
+
+  openDirectorDialog(name: string, bio: string, birthdate: string): void {
     this.dialog.open(MovieDirectorComponent, {
-      data: { name, bio, birthyear },
+      data: { name, bio, birthdate },
       width: '650px'
     });
   }
