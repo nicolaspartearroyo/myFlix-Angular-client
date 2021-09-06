@@ -5,7 +5,7 @@
       <mat-card-title style="font-size: 28px;">{{movie.Title}}</mat-card-title>
       <mat-card-subtitle>Directed by: {{movie.Director.Name}}</mat-card-subtitle>
     </mat-card-header>
-    <img src={{movie.ImageURL}} alt={{movie.Title}} style="max-width:400px" />
+    <img src={{movie.ImageURL}} style="max-width:400px" />
     <mat-card-actions>
       <button mat-stroked-button (click)="openGenre(movie.Genre.Name, movie.Genre.Description)" color="primary">
         Genre

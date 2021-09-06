@@ -1,21 +1,21 @@
 <app-nav-bar></app-nav-bar>
-<div class="wrapper">
-  <h1>Favorite movies</h1>
+<div class="wrapper" style="background-color: black;">
+  <h1 style="margin: 5px; padding-top: 10px; padding-left: 10px; color:white">Favorite movies</h1>
   <div class="movie-container">
-    <mat-card class="custom-card" *ngFor="let movie of movies">
+    <mat-card style="background-color: black;" class="custom-card" *ngFor="let movie of movies">
       <mat-card-header class="custom-card-header">
         <mat-card-title class="custom-card-title">{{
           movie.title
           }}</mat-card-title>
       </mat-card-header>
       <mat-card-content [style.margin]="'0'" class="custom-card-content">
-        <img mat-card-image src="{{ movie.imagePath }}" alt="{{ movie.title }}" />
+        <img mat-card-image src="{{ movie.ImageURL }}" style="max-width:400px" />
       </mat-card-content>
       <mat-card-actions class="custom-card-actions">
         <div>
-          <button mat-icon-button (click)="toggleFavoriteMovie(movie._id, movie.title)" style="margin: 0.5rem 1rem"
-            color="primary" matTooltip="Add to Favorites list" aria-label="Add to Favorites list">
-            <mat-icon>favorite_border</mat-icon>
+          <button mat-icon-button (click)="toggleFavoriteMovie(movie._id, movie.Title)" style="margin: 0.5rem 1rem"
+            color="primary" matTooltip="Add to Favorites list" aria-label="Remove from Favorites list">
+            <span>Remove from Favorites</span>
           </button>
         </div>
       </mat-card-actions>
