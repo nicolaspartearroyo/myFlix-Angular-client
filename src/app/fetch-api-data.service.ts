@@ -154,7 +154,7 @@ export class FetchApiDataService {
 
     // Pass the token in the HTTP header to the call.
     return this.http
-      .get(apiUrl + `users/${username}/favorites/`, {
+      .get(apiUrl + `users/${username}`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
