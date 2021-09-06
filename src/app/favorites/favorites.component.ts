@@ -26,7 +26,10 @@ export class FavoritesComponent implements OnInit {
     this.getFavoritesMovies();
   }
 
-  // Fetch all movies in user's Favorites list.
+  /**
+    * Fetch all movies in user's Favorites list
+    * @returns All movies stored in the user's Favorites list
+    */
   getFavoritesMovies(): void {
     this.fetchApiData.getFavorites(this.username).subscribe((resp: any) => {
       const favoriteMovies = resp.FavoriteMovies;

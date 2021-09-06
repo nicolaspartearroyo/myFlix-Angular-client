@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
+//Declaration of the api url which will fetch with the app
 const apiUrl = 'https://myflixbypartearroyo.herokuapp.com/';
 
 // registration
@@ -13,8 +14,12 @@ const apiUrl = 'https://myflixbypartearroyo.herokuapp.com/';
 })
 
 export class FetchApiDataService {
+  // Inject HttpClient module to constructor
   constructor(private http: HttpClient, private router: Router) { }
 
+  /**
+  * @param userData  Provided from API, Username, Password, Email, Birthdate, Favorite Movies.
+  */
   public userRegistration(userData: any): Observable<any> {
     console.log(userData);
     return this.http.post(apiUrl + 'users', userData).pipe(
@@ -22,6 +27,9 @@ export class FetchApiDataService {
     );
   }
 
+  /**
+    * Endpoint for user login.
+  */
   public userLogin(userData: any): Observable<any> {
     console.log(userData);
     return this.http.post(apiUrl + 'login', userData).pipe(
@@ -29,6 +37,9 @@ export class FetchApiDataService {
     );
   }
 
+  /**
+   * Delete user profile
+  */
   public deleteUser(): Observable<any> {
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
@@ -42,6 +53,10 @@ export class FetchApiDataService {
     );
   }
 
+  /**
+     * Fetch all movies
+     * @retuns All the movies
+    */
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies', {
@@ -55,6 +70,11 @@ export class FetchApiDataService {
     );
   }
 
+  /**
+  * Fetch user details
+  * @param user Username is required.
+  * @returns User details
+ */
   getUser(user: any): Observable<any> {
     const token = localStorage.getItem('token');
 
@@ -68,6 +88,12 @@ export class FetchApiDataService {
     );
   }
 
+  /**
+  * Update user details
+  * @param userDetails Fetched from input forn, exludes Username. If included will return 500 error
+  * @param user Username required
+  * @returns Updates users details
+ */
   editUserProfile(userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('username');
@@ -96,6 +122,7 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
+  // Get directors endpoint
   getDirector(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'directors/:name', {
@@ -108,6 +135,7 @@ export class FetchApiDataService {
     );
   }
 
+  // Get Genre endpoint
   getGenre(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'genre/:name', {
@@ -120,13 +148,13 @@ export class FetchApiDataService {
     );
   }
 
-  // Get Favorites list (Endpoint: 'users/:username/favorites', Method: GET).
+  // Get Favorites list from user
   public getFavorites(username: any): Observable<any> {
     const token = localStorage.getItem('token');
 
     // Pass the token in the HTTP header to the call.
     return this.http
-      .get(apiUrl + `users/${username}`, {
+      .get(apiUrl + `users/${username}/favourties/`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -161,12 +189,13 @@ export class FetchApiDataService {
       })
       .pipe(catchError(this.handleError));
   }
-
+  // Non-typed response extraction
   private extractResponseData(res: any | object): any {
     const body = res;
     return body || {};
   }
 
+  // hadle errors
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error('Some error occurred:', error.error.message);
