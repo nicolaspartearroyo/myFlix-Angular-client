@@ -11,9 +11,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditProfileComponent implements OnInit {
   isLoading = false;
 
-  /**
-   * Params for updating user, Username cannot be updated
-  */
   @Input() userDetails = {
     Username: '',
     Password: '',
@@ -22,6 +19,7 @@ export class EditProfileComponent implements OnInit {
   };
 
   constructor(
+    
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<EditProfileComponent>,
     public snackBar: MatSnackBar,
@@ -29,17 +27,13 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  /**
-   * Update user details
-  */
   updateUser(): void {
     this.isLoading = true;
     this.fetchApiData.editUserProfile(this.userDetails).subscribe((res) => {
       this.isLoading = false;
       this.dialogRef.close();
       localStorage.setItem('username', res.Username)
-      console.log(res)
-      this.snackBar.open(this.userDetails.Username, 'Successfully updated user details!', {
+      this.snackBar.open(this.userDetails.Username, 'Successfully updated!', {
         duration: 3000
       });
     }, (res) => {

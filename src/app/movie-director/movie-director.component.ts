@@ -10,9 +10,7 @@ export class MovieDirectorComponent implements OnInit {
 
   constructor(
 
-    /**
-     * Uses inject to get director details
-    */
+
     @Inject(MAT_DIALOG_DATA)
     public directorData: {
       name: string;

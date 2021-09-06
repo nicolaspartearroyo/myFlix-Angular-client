@@ -40,10 +40,10 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteProfile(): void {
-    if (confirm('Are you sure? This cannot be undone.')) {
+    if (confirm('Are you sure?')) {
       this.fetchApiData.deleteUser().subscribe(() => {
         localStorage.clear();
-        this.router.navigate(['welcome']);
+        this.router.navigate(['Welcome']);
         this.snackBar.open('Account Deleted', 'OK', {
           duration: 3000
         });
