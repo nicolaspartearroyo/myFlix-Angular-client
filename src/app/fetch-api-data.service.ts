@@ -147,7 +147,6 @@ export class FetchApiDataService {
       catchError(this.handleError)
     );
   }
-
   // Get Favorites list from user
   public getFavorites(username: any): Observable<any> {
     const token = localStorage.getItem('token');
