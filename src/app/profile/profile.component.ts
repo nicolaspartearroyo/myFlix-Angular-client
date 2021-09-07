@@ -12,7 +12,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
+//user required
   user: any = {};
 
   constructor(
@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
     this.getUser();
   }
 
+  // get user data
   getUser(): void {
     let user = localStorage.getItem('username');
     this.fetchApiData.getUser(user).subscribe((res: any) => {
@@ -33,12 +34,14 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  //open modal form for user to update data
   openUserUpdateDialog(): void {
     this.dialog.open(EditProfileComponent, {
       width: '400px'
     });
   }
 
+  // eliminate user profile
   deleteProfile(): void {
     if (confirm('Are you sure?')) {
       this.fetchApiData.deleteUser().subscribe(() => {
